@@ -1,0 +1,175 @@
+<div id="sf-living-universe">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #05020a;
+      --pink: #ff00ff;
+      --card-glass: rgba(25, 5, 50, 0.85);
+    }
+
+    #sf-living-universe {
+      width: 100%; height: 750px;
+      background: radial-gradient(circle at center, #1a083d, var(--bg));
+      overflow: hidden; perspective: 1200px;
+      font-family: 'Inter', sans-serif; position: relative;
+      cursor: grab;
+    }
+
+    .g-card {
+      position: absolute; width: 220px; height: 130px;
+      background: var(--card-glass);
+      border: 1px solid rgba(255, 0, 255, 0.3);
+      border-radius: 12px; padding: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      cursor: grab;
+      z-index: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      user-select: none;
+    }
+
+    .g-card:hover { border-color: var(--pink); box-shadow: 0 0 25px var(--pink); }
+    .g-card:active { border-color: #fff; z-index: 1000; cursor: grabbing; }
+
+    .g-tag { font-family: 'JetBrains Mono', monospace; color: var(--pink); font-size: 0.6rem; margin-bottom: 5px; pointer-events: none; }
+    .g-title { color: white; font-size: 1rem; font-weight: 800; pointer-events: none; }
+
+    /* Modal Styling */
+    #details-modal {
+      display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 2, 20, 0.95); z-index: 10000;
+      align-items: center; justify-content: center; backdrop-filter: blur(15px);
+    }
+    .modal-content {
+      background: var(--card-glass); border: 2px solid var(--pink);
+      padding: 40px; border-radius: 20px; max-width: 450px; text-align: center; color: white;
+    }
+    .close-btn { background: var(--pink); color: #fff; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; margin-top: 20px; }
+  </style>
+
+  <div id="drag-area" style="width: 100%; height: 100%;"></div>
+
+  <div id="details-modal">
+    <div class="modal-content">
+      <h2 id="m-title"></h2>
+      <p id="m-desc"></p>
+      <button class="close-btn" onclick="closeModal()">Close Details</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Your 10 Services
+  const services = [
+    { title: "Business Consultation", desc: "Professional guidance to identify challenges and create solutions.", kw: "SRV_01" },
+    { title: "Strategic Planning", desc: "Structured planning for long-term growth and stability.", kw: "SRV_02" },
+    { title: "Market Research", desc: "In-depth research to understand trends and competitors.", kw: "SRV_03" },
+    { title: "Brand Development", desc: "Building strong brand identity and market positioning.", kw: "SRV_04" },
+    { title: "Logo Design", desc: "Creative logo designs for your brand vision.", kw: "SRV_05" },
+    { title: "Graphic Design", desc: "Visual designs for digital and print media.", kw: "SRV_06" },
+    { title: "Website Design", desc: "Modern and responsive website designs.", kw: "SRV_07" },
+    { name: "Web Development", desc: "High-quality website development using modern technologies.", kw: "SRV_08" },
+    { title: "Mobile App Dev", desc: "Custom apps for Android and iOS platforms.", kw: "SRV_09" },
+    { title: "Software Dev", desc: "Tailored software for business automation.", kw: "SRV_10" }
+  ];
+
+  const dragArea = document.getElementById('drag-area');
+  const cardElements = [];
+  let activeCard = null;
+  let offsetX, offsetY;
+
+  function init() {
+    services.forEach((s, i) => {
+      const card = document.createElement('div');
+      card.className = 'g-card';
+      
+      // Random initial positions and drift directions
+      const data = {
+        x: Math.random() * (window.innerWidth - 250),
+        y: Math.random() * 500 + 100,
+        dx: (Math.random() - 0.5) * 0.8, // Horizontal speed
+        dy: (Math.random() - 0.5) * 0.8, // Vertical speed
+        z: Math.random() * 200 - 100,
+        isDragging: false
+      };
+
+      card.style.left = data.x + 'px';
+      card.style.top = data.y + 'px';
+      card.style.transform = `translateZ(${data.z}px)`;
+      card.innerHTML = `<div class="g-tag">${s.kw}</div><div class="g-title">${s.title || s.name}</div>`;
+      
+      // Interaction Listeners
+      card.addEventListener('mousedown', (e) => startDrag(e, data, card));
+      card.addEventListener('click', () => { if(!data.isMoving) showDetails(s.title || s.name, s.desc) });
+
+      dragArea.appendChild(card);
+      cardElements.push({ el: card, data: data });
+    });
+
+    requestAnimationFrame(updatePositions);
+  }
+
+  function updatePositions() {
+    cardElements.forEach(obj => {
+      if (!obj.data.isDragging) {
+        // Auto-drifting logic
+        obj.data.x += obj.data.dx;
+        obj.data.y += obj.data.dy;
+
+        // Bounce off walls
+        if (obj.data.x <= 0 || obj.data.x >= window.innerWidth - 230) obj.data.dx *= -1;
+        if (obj.data.y <= 0 || obj.data.y >= 700 - 140) obj.data.dy *= -1;
+
+        obj.el.style.left = obj.data.x + 'px';
+        obj.el.style.top = obj.data.y + 'px';
+      }
+    });
+    requestAnimationFrame(updatePositions);
+  }
+
+  function startDrag(e, data, el) {
+    activeCard = { data, el };
+    data.isDragging = true;
+    
+    const rect = el.getBoundingClientRect();
+    const parentRect = dragArea.getBoundingClientRect();
+    
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+  }
+
+  function drag(e) {
+    if (!activeCard) return;
+    const parentRect = dragArea.getBoundingClientRect();
+    
+    activeCard.data.x = e.clientX - parentRect.left - offsetX;
+    activeCard.data.y = e.clientY - parentRect.top - offsetY;
+    
+    activeCard.el.style.left = activeCard.data.x + 'px';
+    activeCard.el.style.top = activeCard.data.y + 'px';
+  }
+
+  function stopDrag() {
+    if (activeCard) activeCard.data.isDragging = false;
+    activeCard = null;
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('mouseup', stopDrag);
+  }
+
+  function showDetails(title, desc) {
+    document.getElementById('m-title').innerText = title;
+    document.getElementById('m-desc').innerText = desc;
+    document.getElementById('details-modal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('details-modal').style.display = 'none';
+  }
+
+  init();
+</script>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Core Solutions | Professional Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow: hidden; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 2000;
+            background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 10px 5%; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: 'Syncopate', sans-serif; font-size: 1rem; color: #00f2ff; text-decoration: none; letter-spacing: 2px; }
+        .contact-links { display: flex; gap: 20px; }
+        .contact-links a { color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 700; transition: 0.3s; border-bottom: 1px solid transparent; }
+        .contact-links a:hover { color: #00f2ff; border-color: #00f2ff; }
+
+        /* Main Section */
+        .universe-section {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-top: 80px; /* Space for Nav */
+        }
+
+        .hero-text {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            pointer-events: none;
+        }
+        .hero-text h1 { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; color: #00f2ff; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
+        .hero-text p { font-size: 0.9rem; color: #888; margin-top: 5px; }
+
+        /* --- THE FIXED UNIVERSE --- */
+        #neon-pulse-container {
+            flex-grow: 1;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            perspective: 1200px;
+            /* Prevents cards from going behind the hero text too much */
+            margin-top: 10px; 
+        }
+
+        .card-wrapper {
+            position: absolute;
+            width: 160px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-wrapper.flipped .card-inner { transform: rotateY(180deg); }
+        .card-wrapper.flipped { z-index: 1000 !important; }
+
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 6px;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; padding: 10px; border: 1px solid rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .card-front { background: rgba(10, 15, 20, 0.95); }
+        .card-back { 
+            background: #00f2ff; color: #000; 
+            transform: rotateY(180deg); text-align: center;
+            font-size: 0.7rem; font-weight: 700; line-height: 1.2;
+        }
+
+        .kw-tag { font-family: 'Syncopate', sans-serif; font-size: 7px; color: #00f2ff; margin-bottom: 5px; }
+        .title-text { color: white; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; text-align: center; }
+
+        /* Float Action Button for WhatsApp */
+        .wa-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #25d366; color: white;
+            padding: 15px 25px; border-radius: 50px;
+            text-decoration: none; font-weight: 700;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 3000; transition: 0.3s;
+        }
+        .wa-float:hover { transform: translateY(-5px); background: #20ba5a; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">EXPERT_CORE</a>
+        <div class="contact-links">
+            <a href="mailto:beright454@gmail.com">beright454@gmail.com</a>
+            <a href="tel:+48510820441">+48 510 820 441</a>
+        </div>
+    </nav>
+
+    <div class="universe-section">
+        <div class="hero-text">
+            <h1>SERVICE ECOSYSTEM</h1>
+            <p>Interactive Node Map: Click any item to expand details</p>
+        </div>
+
+        <div id="neon-pulse-container">
+            <div id="board" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/48510820441" class="wa-float" target="_blank">WHATSAPP US</a>
+
+    <script>
+        const services = [
+            { kw: "SRV_01", title: "Business Consultation", desc: "Professional guidance to help identify challenges and create effective solutions." },
+            { kw: "SRV_02", title: "Strategic Planning", desc: "Structured planning to achieve long-term business growth and stability." },
+            { kw: "SRV_03", title: "Market Research", desc: "In-depth research to understand market trends, customer needs, and competitors." },
+            { kw: "SRV_04", title: "Brand Development", desc: "Building strong brand identity, values, and market positioning." },
+            { kw: "SRV_05", title: "Logo Design", desc: "Creative logo designs that represent your brand vision and identity." },
+            { kw: "SRV_06", title: "Graphic Design", desc: "Professional visual designs for digital and print media." },
+            { kw: "SRV_07", title: "Website Design", desc: "Modern, responsive, and user-friendly website designs." },
+            { kw: "SRV_08", title: "Website Development", desc: "High-quality website development using modern technologies." },
+            { kw: "SRV_09", title: "Mobile App Development", desc: "Custom mobile applications for Android and iOS platforms." },
+            { kw: "SRV_10", title: "Software Development", desc: "Tailored software solutions for business automation and growth." },
+            { kw: "SRV_11", title: "E-commerce Solutions", desc: "Complete online store setup and management services." },
+            { kw: "SRV_12", title: "UI/UX Design", desc: "User-focused interface and experience design for better engagement." },
+            { kw: "SRV_13", title: "Content Writing", desc: "Professional content for websites, blogs, and marketing materials." },
+            { kw: "SRV_14", title: "Copywriting", desc: "Persuasive content to increase sales and customer conversions." },
+            { kw: "SRV_15", title: "SEO Services", desc: "Search engine optimization to improve website ranking and visibility." },
+            { kw: "SRV_16", title: "Social Media Management", desc: "Managing social platforms to grow audience and engagement." },
+            { kw: "SRV_17", title: "Digital Marketing", desc: "Complete online marketing solutions for business growth." },
+            { kw: "SRV_18", title: "Email Marketing", desc: "Targeted email campaigns to reach and retain customers." },
+            { kw: "SRV_19", title: "PPC Advertising", desc: "Paid advertising campaigns for fast traffic and conversions." },
+            { kw: "SRV_20", title: "Lead Generation", desc: "Systems and strategies to generate quality business leads." },
+            { kw: "SRV_21", title: "CRM Solutions", desc: "Customer relationship management system setup and support." },
+            { kw: "SRV_22", title: "Data Analysis", desc: "Business data analysis for better decision-making." },
+            { kw: "SRV_23", title: "Cloud Solutions", desc: "Cloud storage, hosting, and system management services." },
+            { kw: "SRV_24", title: "Cybersecurity Services", desc: "Protection of systems, data, and networks from threats." },
+            { kw: "SRV_25", title: "IT Support Services", desc: "Technical support and IT system management." },
+            { kw: "SRV_26", title: "System Integration", desc: "Integration of different systems into one efficient workflow." },
+            { kw: "SRV_27", title: "Automation Solutions", desc: "Business process automation for efficiency and productivity." },
+            { kw: "SRV_28", title: "Project Management", desc: "Professional management of projects from start to finish." },
+            { kw: "SRV_29", title: "Quality Assurance", desc: "Testing and quality control to ensure high standards." },
+            { kw: "SRV_30", title: "Maintenance Services", desc: "Regular system and service maintenance support." },
+            { kw: "SRV_31", title: "Technical Training", desc: "Training programs for technical tools and systems." },
+            { kw: "SRV_32", title: "Business Training", desc: "Skill development and business knowledge training." },
+            { kw: "SRV_33", title: "Customer Support Services", desc: "Dedicated support for customer satisfaction." },
+            { kw: "SRV_34", title: "Call Center Services", desc: "Inbound and outbound customer communication services." },
+            { kw: "SRV_35", title: "Virtual Assistance", desc: "Remote administrative and business support services." },
+            { kw: "SRV_36", title: "Documentation Services", desc: "Professional business and technical documentation." },
+            { kw: "SRV_37", title: "Legal Documentation Support", desc: "Assistance in preparing business-related documents." },
+            { kw: "SRV_38", title: "Accounting Services", desc: "Financial management, bookkeeping, and reporting." },
+            { kw: "SRV_39", title: "Tax Consultancy", desc: "Tax planning and compliance support services." },
+            { kw: "SRV_40", title: "Financial Advisory", desc: "Expert financial planning and advisory services." },
+            { kw: "SRV_41", title: "HR Services", desc: "Human resource management and recruitment support." },
+            { kw: "SRV_42", title: "Recruitment Services", desc: "Hiring and talent acquisition solutions." },
+            { kw: "SRV_43", title: "Payroll Management", desc: "Employee salary and payroll processing services." },
+            { kw: "SRV_44", title: "Compliance Management", desc: "Business regulatory and compliance support." },
+            { kw: "SRV_45", title: "Risk Management", desc: "Identifying and managing business risks." },
+            { kw: "SRV_46", title: "Operations Management", desc: "Optimizing daily business operations." },
+            { kw: "SRV_47", title: "Supply Chain Management", desc: "Efficient supply and logistics solutions." },
+            { kw: "SRV_48", title: "Inventory Management", desc: "Stock tracking and inventory optimization." },
+            { kw: "SRV_49", title: "Procurement Services", desc: "Professional sourcing and purchasing services." },
+            { kw: "SRV_50", title: "Logistics Support", desc: "Transportation and delivery coordination services." },
+            { kw: "SRV_51", title: "Facility Management", desc: "Building and infrastructure management services." },
+            { kw: "SRV_52", title: "Maintenance Operations", desc: "Operational maintenance and repair services." },
+            { kw: "SRV_53", title: "Event Management", desc: "Planning and execution of corporate and business events." },
+            { kw: "SRV_54", title: "Public Relations", desc: "Brand image management and media communication." },
+            { kw: "SRV_55", title: "Media Production", desc: "Photo, video, and digital media creation services." },
+            { kw: "SRV_56", title: "Advertising Services", desc: "Brand promotion through online and offline channels." },
+            { kw: "SRV_57", title: "Printing Services", desc: "Professional printing for business materials." },
+            { kw: "SRV_58", title: "Packaging Design", desc: "Creative and functional product packaging solutions." },
+            { kw: "SRV_59", title: "Product Development", desc: "From idea to launch product development services." },
+            { kw: "SRV_60", title: "Business Expansion Consulting", desc: "Support for scaling, growth, and market expansion." }
+        ];
+
+        const board = document.getElementById('board');
+        const cardObjects = [];
+
+        function createCards() {
+            const containerWidth = board.offsetWidth;
+            const containerHeight = board.offsetHeight;
+
+            services.forEach((s) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'card-wrapper';
+                
+                // Fixed random start within safe boundaries
+                const state = {
+                    x: Math.random() * (containerWidth - 170),
+                    y: Math.random() * (containerHeight - 110),
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    isFlipped: false
+                };
+
+                wrapper.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="kw-tag">${s.kw}</div>
+                            <div class="title-text">${s.title}</div>
+                        </div>
+                        <div class="card-back">
+                            <div>${s.desc}</div>
+                        </div>
+                    </div>
+                `;
+
+                wrapper.onclick = () => {
+                    state.isFlipped = !state.isFlipped;
+                    wrapper.classList.toggle('flipped');
+                };
+
+                board.appendChild(wrapper);
+                cardObjects.push({ el: wrapper, state });
+            });
+            requestAnimationFrame(update);
+        }
+
+        function update() {
+            const w = board.offsetWidth;
+            const h = board.offsetHeight;
+
+            cardObjects.forEach(card => {
+                if (!card.state.isFlipped) {
+                    card.state.x += card.state.vx;
+                    card.state.y += card.state.vy;
+
+                    // Bounce logic for safe area
+                    if (card.state.x <= 5 || card.state.x >= w - 165) card.state.vx *= -1;
+                    if (card.state.y <= 5 || card.state.y >= h - 105) card.state.vy *= -1;
+
+                    card.el.style.transform = `translate3d(${card.state.x}px, ${card.state.y}px, 0)`;
+                }
+            });
+            requestAnimationFrame(update);
+        }
+
+        // Initialize and handle window resizing
+        createCards();
+        window.onresize = () => location.reload(); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<div id="sf-natural-fit">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;600&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --orchard-bg: #f8fbf9;
+      --mint-glass: rgba(255, 255, 255, 0.85);
+      --sage-text: #2d5a50;
+      --leaf-glow: rgba(45, 90, 80, 0.1);
+    }
+
+    #sf-natural-fit {
+      width: 100%; height: 600px; /* Locked height to fit screen */
+      background: var(--orchard-bg);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; perspective: 1500px;
+      font-family: 'Quicksand', sans-serif;
+      position: relative;
+    }
+
+    /* THE COMPRESSED VINE */
+    .vine-stage {
+      position: relative; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      transform-style: preserve-3d;
+      animation: slowBreathe 12s infinite ease-in-out;
+    }
+
+    @keyframes slowBreathe {
+      0%, 100% { transform: scale(1) rotateX(2deg); }
+      50% { transform: scale(1.05) rotateX(-2deg); }
+    }
+
+    /* THE GLASS LEAF NODES - Optimized for Screen Fit */
+    .leaf-node {
+      position: absolute; width: 220px; height: 75px;
+      background: var(--mint-glass);
+      backdrop-filter: blur(8px);
+      border-radius: 40px 4px 40px 4px;
+      border: 1px solid rgba(45, 90, 80, 0.1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 20px var(--leaf-glow);
+    }
+
+    /* Balanced 10-Node Grid Distribution (Fit within 600px) */
+    .leaf-node:nth-child(1)  { transform: translate3d(-280px, -180px, 0); }
+    .leaf-node:nth-child(2)  { transform: translate3d(280px, -180px, 0); }
+    .leaf-node:nth-child(3)  { transform: translate3d(-320px, -60px, 100px); }
+    .leaf-node:nth-child(4)  { transform: translate3d(320px, -60px, 100px); }
+    .leaf-node:nth-child(5)  { transform: translate3d(-150px, 0px, 200px); }
+    .leaf-node:nth-child(6)  { transform: translate3d(150px, 0px, 200px); }
+    .leaf-node:nth-child(7)  { transform: translate3d(-320px, 60px, 100px); }
+    .leaf-node:nth-child(8)  { transform: translate3d(320px, 60px, 100px); }
+    .leaf-node:nth-child(9)  { transform: translate3d(-280px, 180px, 0); }
+    .leaf-node:nth-child(10) { transform: translate3d(280px, 180px, 0); }
+
+    .leaf-node:hover {
+      background: #fff;
+      border-color: var(--sage-text);
+      transform: scale(1.25) translateZ(300px) !important;
+      z-index: 500;
+      box-shadow: 0 30px 60px rgba(45, 90, 80, 0.2);
+    }
+
+    .l-id { font-size: 0.5rem; font-weight: 700; color: var(--sage-text); opacity: 0.6; letter-spacing: 1px; }
+    .l-title { 
+      font-size: 0.85rem; font-weight: 700; color: var(--sage-text); 
+      text-align: center; margin-top: 3px; text-transform: uppercase;
+    }
+
+    /* MODAL */
+    #orchard-modal {
+      display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.98); z-index: 1000;
+      align-items: center; justify-content: center; backdrop-filter: blur(15px);
+    }
+    .modal-leaf {
+      max-width: 400px; padding: 40px; text-align: center;
+      background: #fff; border: 1px solid var(--sage-text);
+      box-shadow: 0 50px 100px rgba(0,0,0,0.1);
+    }
+    .modal-leaf h2 { font-family: 'Playfair Display'; font-style: italic; font-size: 2rem; color: var(--sage-text); }
+    .close-leaf { margin-top: 20px; background: var(--sage-text); color: #fff; border: none; padding: 10px 30px; cursor: pointer; font-weight: 600; border-radius: 20px; }
+  </style>
+
+  <div class="vine-stage">
+    <div class="leaf-node" onclick="openLeaf('Facility Mgmt', 'Building and infrastructure management.')"><div class="l-id">51</div><div class="l-title">Facility Mgmt</div></div>
+    <div class="leaf-node" onclick="openLeaf('Maintenance', 'Operational repair and upkeep.')"><div class="l-id">52</div><div class="l-title">Maintenance</div></div>
+    <div class="leaf-node" onclick="openLeaf('Event Mgmt', 'Corporate event planning and execution.')"><div class="l-id">53</div><div class="l-title">Event Mgmt</div></div>
+    <div class="leaf-node" onclick="openLeaf('Public Relations', 'Brand image and media strategy.')"><div class="l-id">54</div><div class="l-title">Public Relations</div></div>
+    <div class="leaf-node" onclick="openLeaf('Media Production', 'Digital video and photo creation.')"><div class="l-id">55</div><div class="l-title">Media Production</div></div>
+    <div class="leaf-node" onclick="openLeaf('Advertising', 'Online and offline brand promotion.')"><div class="l-id">56</div><div class="l-title">Advertising</div></div>
+    <div class="leaf-node" onclick="openLeaf('Printing', 'Professional business material printing.')"><div class="l-id">57</div><div class="l-title">Printing</div></div>
+    <div class="leaf-node" onclick="openLeaf('Packaging', 'Functional product packaging solutions.')"><div class="l-id">58</div><div class="l-title">Packaging</div></div>
+    <div class="leaf-node" onclick="openLeaf('Product Dev', 'Idea-to-launch product services.')"><div class="l-id">59</div><div class="l-title">Product Dev</div></div>
+    <div class="leaf-node" onclick="openLeaf('Expansion', 'Scaling and market growth consulting.')"><div class="l-id">60</div><div class="l-title">Expansion</div></div>
+  </div>
+
+  <div id="orchard-modal">
+    <div class="modal-leaf">
+      <h2 id="l-title"></h2>
+      <p id="l-desc" style="color:#555; margin:15px 0;"></p>
+      <button class="close-leaf" onclick="closeLeaf()">DISMISS</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openLeaf(t, d) {
+    document.getElementById('l-title').innerText = t;
+    document.getElementById('l-desc').innerText = d;
+    document.getElementById('orchard-modal').style.display = 'flex';
+  }
+  function closeLeaf() {
+    document.getElementById('orchard-modal').style.display = 'none';
+  }
+</script>

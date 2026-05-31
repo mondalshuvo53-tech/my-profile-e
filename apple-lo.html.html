@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taniska Favourite Fruit - Facebook Reel</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:#000;
+    font-family:Arial, sans-serif;
+}
+
+/* FACEBOOK REEL SIZE */
+.video-container{
+    width:405px;
+    height:720px;
+    position:relative;
+    overflow:hidden;
+    border-radius:12px;
+
+    /* GALAXY BACKGROUND */
+    background:
+    radial-gradient(circle at 20% 20%, rgba(106,0,255,.8), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(0,195,255,.8), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(255,0,200,.8), transparent 35%),
+    linear-gradient(135deg,#020024,#090979,#000000);
+
+    animation:galaxyMove 12s linear infinite alternate;
+}
+
+@keyframes galaxyMove{
+    from{
+        background-position:0 0,0 0,0 0,0 0;
+    }
+    to{
+        background-position:60px 40px,-60px 30px,30px -50px,0 0;
+    }
+}
+
+/* TOP TITLE */
+.top-banner{
+    width:100%;
+    background:#00ffcc;
+    text-align:center;
+    padding:16px;
+    border-bottom:5px solid #0077ff;
+    box-shadow:0 0 20px rgba(0,255,204,.8);
+}
+
+.top-banner h1{
+    font-size:30px;
+    font-weight:900;
+    color:#000;
+    text-transform:uppercase;
+    line-height:1.1;
+    text-shadow:2px 2px #fff;
+}
+
+/* SCROLLING TEXT UNDER TITLE */
+.info-banner{
+    width:100%;
+    overflow:hidden;
+    background:#ffcc00;
+    padding:10px 0;
+    border-bottom:3px solid #fff;
+}
+
+.info-scroll{
+    display:inline-block;
+    white-space:nowrap;
+    padding-left:100%;
+    font-size:20px;
+    font-weight:900;
+    color:#000;
+    animation:scrollTop 25s linear infinite;
+}
+
+@keyframes scrollTop{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
+
+/* MAIN CONTENT */
+.content{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    padding:20px;
+    height:430px;
+}
+
+/* APPLE SIDE */
+.apple-side{
+    width:45%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.apple{
+    font-size:140px;
+
+    animation:
+    floatApple 3s ease-in-out infinite,
+    spinApple 10s linear infinite,
+    colorApple 8s linear infinite;
+}
+
+@keyframes floatApple{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-20px);
+    }
+}
+
+@keyframes spinApple{
+    from{
+        rotate:0deg;
+    }
+    to{
+        rotate:360deg;
+    }
+}
+
+@keyframes colorApple{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(360deg);}
+}
+
+/* VIDEO SIDE */
+.video-section{
+    width:45%;
+}
+
+.video-title{
+    background:#00ffcc;
+    color:#000;
+    text-align:center;
+    font-size:16px;
+    font-weight:900;
+    padding:8px;
+    border-radius:12px 12px 0 0;
+}
+
+.video-box{
+    width:100%;
+    height:320px;
+    overflow:hidden;
+    border-radius:0 0 12px 12px;
+    border:4px solid #fff;
+    box-shadow:0 0 15px rgba(255,255,255,.6);
+}
+
+.video-box video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* BOTTOM RHYME BANNER */
+.bottom-banner{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    background:#ff0066;
+    overflow:hidden;
+    padding:15px 0;
+    border-top:5px solid #ffcc00;
+}
+
+.bottom-scroll{
+    display:inline-block;
+    white-space:nowrap;
+    padding-left:100%;
+    color:#fff;
+    font-size:24px;
+    font-weight:900;
+    text-shadow:3px 3px #000;
+    animation:scrollBottom 18s linear infinite;
+}
+
+@keyframes scrollBottom{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="video-container">
+
+    <!-- TOP TITLE -->
+    <div class="top-banner">
+        <h1>
+            TANISKA'S<br>
+            FAVOURITE FRUIT
+        </h1>
+    </div>
+
+    <!-- TOP MOVING SENTENCE -->
+    <div class="info-banner">
+        <div class="info-scroll">
+            my favourite is apple because apple is so juice, and sweet i love apple very much some time i drink apple juice . bye.
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+        <!-- APPLE -->
+        <div class="apple-side">
+            <div class="apple">🍎</div>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="video-section">
+
+            <div class="video-title">
+                please follow me 
+            </div>
+
+            <div class="video-box">
+                <video autoplay muted loop playsinline>
+                    <source src="daughter.mp4" type="video/mp4">
+                </video>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM MOVING RHYME -->
+    <div class="bottom-banner">
+        <div class="bottom-scroll">
+            🍎 Apple, apple, sweet and bright • Healthy, juicy, full of delight • Red and shiny, what a sight • My favourite fruit from morning till night! 🍎
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

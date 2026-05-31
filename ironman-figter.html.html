@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subrata's 8D Analytics - Stark HUD</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Share Tech Mono', monospace; }
+        body { background-color: #020813; color: #e0ffff; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; background-image: linear-gradient(rgba(0,243,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,243,255,0.05) 1px, transparent 1px); background-size: 50px 50px; }
+        
+        /* SEE MORE MENU STYLES */
+        .menu-container { position: fixed; top: 30px; right: 40px; z-index: 99999; font-family: 'Segoe UI', sans-serif;}
+        .see-more-btn { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.3); color: white; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .see-more-btn:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); border: 1px solid #00f3ff; }
+        .dropdown-menu { display: none; position: absolute; top: 60px; right: 0; background: rgba(10, 15, 30, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; min-width: 220px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.8); flex-direction: column; }
+        .dropdown-menu.show { display: flex; }
+        .dropdown-menu a { color: white; padding: 16px 20px; text-decoration: none; font-size: 15px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .dropdown-menu a:hover { background: rgba(255, 255, 255, 0.1); color: #00f3ff; padding-left: 25px; }
+
+        .scene { perspective: 2000px; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .stack-container { position: relative; width: 780px; height: 480px; transform-style: preserve-3d; transform: translate(-150px, -100px); }
+        .card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 10, 25, 0.7); backdrop-filter: blur(10px); border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.3); display: flex; flex-direction: column; transition: transform 1s, opacity 1s, box-shadow 0.8s; overflow: hidden; }
+        .card.active { box-shadow: 0 30px 60px -15px #000, 0 0 40px rgba(0,243,255,0.2), inset 0 0 30px rgba(0,243,255,0.15); border: 2px solid rgba(0,243,255,0.8); background: rgba(2,15,35,0.85); }
+        .card:not(.active) { opacity: 0.6; }
+        .header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,243,255,0.4); }
+        .header h2 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; text-transform: uppercase; text-shadow: 0 0 15px rgba(0,243,255,0.8); }
+        .slide-counter { color: #00f3ff; border: 1px solid rgba(0,243,255,0.5); padding: 8px 20px; }
+        .content { padding: 30px 40px; flex-grow: 1; display: flex; gap: 40px; align-items: center; }
+        .player-img { width: 250px; height: 250px; object-fit: contain; border: 1px solid rgba(0,243,255,0.3); background: #000; padding: 5px; }
+        .stats-grid { flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .stat-item { padding: 10px 15px; border-left: 2px solid rgba(0,243,255,0.3); }
+        .card.active .stat-item { border-left: 3px solid #ffb700; }
+        .stat-label { font-size: 0.9rem; color: #00f3ff; opacity: 0.7; }
+        .card.active .stat-label { color: #ffb700; opacity: 1; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0,243,255,0.5); }
+        .progress-container { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); width: 500px; height: 2px; background: rgba(0,243,255,0.2); }
+        .progress-bar { height: 100%; background: #00f3ff; transition: width 1s; box-shadow: 0 0 15px #00f3ff; }
+    </style>
+</head>
+<body>
+    
+    <div class="menu-container">
+        <button class="see-more-btn" onclick="toggleMenu()">☰ See More</button>
+        <div class="dropdown-menu" id="myDropdown">
+            <a href="index.html">🏢 Professional Base</a>
+            <a href="ironman.html">🤖 Iron Man HUD</a>
+            <a href="panther.html">🐆 Wakanda Panther</a>
+            <a href="galaxy.html">🌌 Nano Water</a>
+        </div>
+    </div>
+
+    <div class="scene"><div class="stack-container" id="stackContainer"></div></div>
+    <div class="progress-container"><div class="progress-bar" id="progressBar" style="width: 0%"></div></div>
+
+    <script>
+        function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
+        window.onclick = function(e) { if (!e.target.matches('.see-more-btn')) { document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); } }
+
+        const playerData = [
+            { name: "Subrata Mondal", match: 150, run: 1000, sr: 160, born: "Indian", age: 37, imageLink: "https://drive.google.com/uc?export=view&id=1oJrTStNk9CbqUHTgOfVkLwy5Svk76B_k" },
+            { name: "Neripan Biswea", match: 145, run: 980,  sr: 155, born: "Indian", age: 34, imageLink: "https://drive.google.com/uc?export=view&id=1N9gvX1zQkpxdo4bamBzQwtddGZVo99Xl" },
+            { name: "Ramesh Majhi",   match: 130, run: 850,  sr: 140, born: "Indian", age: 32, imageLink: "https://drive.google.com/uc?export=view&id=168SlcDssnLqojkxcqVMcBOWcRsiBAheU" },
+            { name: "Krishna Biswas", match: 160, run: 1100, sr: 165, born: "Indian", age: 35, imageLink: "https://drive.google.com/uc?export=view&id=12jj_sp_I6fcWQ253QcQCicI-5zMcEXKu" },
+            { name: "Nobin Biswas",   match: 120, run: 700,  sr: 135, born: "Indian", age: 30, imageLink: "" },
+            { name: "Santanu Biswas", match: 140, run: 900,  sr: 150, born: "Indian", age: 33, imageLink: "https://drive.google.com/uc?export=view&id=19xp64lRFOQSvY0rm4Q2S2p5VIqRjuL_Y" },
+            { name: "Ratan Roy",      match: 110, run: 600,  sr: 125, born: "Indian", age: 29, imageLink: "https://drive.google.com/uc?export=view&id=1ITWjWD7Xg8QS3eNclWAu4zExVCdGW7nK" },
+            { name: "Sanjiv Shaw",    match: 175, run: 1250, sr: 170, born: "Indian", age: 38, imageLink: "https://drive.google.com/uc?export=view&id=1JIVaIU-Ox6xrGqqzH5M_bkfiY8ik_PGu" },
+            { name: "Omeo Mity",      match: 105, run: 550,  sr: 120, born: "Indian", age: 28, imageLink: "https://drive.google.com/uc?export=view&id=1ESZnPHA_TaWmpeT1sHbmWXWwotk8Psr_" },
+            { name: "Dabu Maity",     match: 135, run: 800,  sr: 145, born: "Indian", age: 31, imageLink: "https://drive.google.com/uc?export=view&id=11YHOXMU0eZUWyEWTUVVfON1PNgyjyAva" }
+            // Add remaining 20 players below as needed
+        ];
+
+        const stack = document.getElementById('stackContainer');
+        playerData.forEach((p, i) => {
+            const card = document.createElement('div'); card.className = 'card';
+            const imgUrl = p.imageLink ? p.imageLink : `https://ui-avatars.com/api/?name=${p.name.replace(' ','+')}&background=010A15&color=00f3ff&size=250`;
+            card.innerHTML = `<div class="header"><h2>${p.name}</h2><span class="slide-counter">PRFL-${i+1}/${playerData.length}</span></div>
+            <div class="content"><img src="${imgUrl}" class="player-img" onerror="this.src='https://ui-avatars.com/api/?name=${p.name.replace(' ','+')}&background=010A15&color=00f3ff'">
+            <div class="stats-grid"><div class="stat-item"><span class="stat-label">Matches</span><span class="stat-value">${p.match}</span></div>
+            <div class="stat-item"><span class="stat-label">Runs</span><span class="stat-value">${p.run}</span></div>
+            <div class="stat-item"><span class="stat-label">SR</span><span class="stat-value">${p.sr}</span></div>
+            <div class="stat-item"><span class="stat-label">Origin</span><span class="stat-value">${p.age} / ${p.born}</span></div></div></div>`;
+            stack.appendChild(card);
+        });
+
+        const cards = document.querySelectorAll('.card');
+        let current = 0; let animating = false;
+
+        function update() {
+            cards.forEach((c, i) => {
+                const r = i - current;
+                if (r < 0) { c.style.transform = `translate3d(-200px, -300px, 100px) scale(1.1)`; c.style.opacity = 0; c.style.zIndex = 100; c.classList.remove('active'); }
+                else {
+                    c.style.transform = `translate3d(${r*130}px, ${r*85}px, ${r*-180}px) scale(${Math.max(0, 1 - r*0.16)})`;
+                    c.style.zIndex = 50 - r;
+                    if(r===0) { c.style.opacity=1; c.classList.add('active'); } else { c.style.opacity = r>5?0:0.6; c.classList.remove('active'); }
+                }
+                c.style.visibility = (r > 6 || r < -1) ? 'hidden' : 'visible';
+            });
+            document.getElementById('progressBar').style.width = `${((current + 1)/playerData.length)*100}%`;
+        }
+
+        function trigger(dir) {
+            if(animating) return;
+            if(dir === 'next' && current < playerData.length - 1) current++; else if(dir === 'prev' && current > 0) current--; else return;
+            animating = true; update(); setTimeout(()=>animating=false, 1000);
+        }
+        window.addEventListener('wheel', e => trigger(e.deltaY > 0 ? 'next' : 'prev'));
+        let ts = 0; window.addEventListener('touchstart', e => ts = e.touches[0].clientY);
+        window.addEventListener('touchend', e => { let d = ts - e.changedTouches[0].clientY; if(d>50) trigger('next'); else if(d<-50) trigger('prev'); });
+        window.addEventListener('keydown', e => { if(e.key==='ArrowDown'||e.key==='ArrowRight') trigger('next'); if(e.key==='ArrowUp'||e.key==='ArrowLeft') trigger('prev'); });
+        update();
+    </script>
+</body>
+</html>

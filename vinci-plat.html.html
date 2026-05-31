@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VINCI PLAY | 3D LUXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Tenor+Sans&family=Montserrat:wght@200;400;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --off-white: #F9F8F6;
+            --stone: #EAE7E1;
+            --brushed-gold: #B89D64;
+            --charcoal: #1A1A1A;
+            /* New Brand Colors */
+            --brand-pink: #FF00E5;
+            --brand-purple: #9D00FF;
+        }
+
+        body { 
+            background-color: var(--off-white); 
+            color: var(--charcoal); 
+            font-family: 'Tenor Sans', sans-serif; 
+            height: 100vh;
+            overflow: hidden;
+            perspective: 2000px;
+        }
+
+        header {
+            position: fixed; top: 0; width: 100%;
+            padding: 40px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+        }
+
+        .brand-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem; letter-spacing: 12px;
+        }
+
+        .scene {
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .cube-container {
+            width: 300px; height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: slowRotate 15s infinite linear;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slowRotate {
+            0% { transform: rotateY(0deg) rotateX(15deg); }
+            100% { transform: rotateY(360deg) rotateX(15deg); }
+        }
+
+        .scene:active .cube-container {
+            animation-play-state: paused;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 300px; height: 300px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 2px solid var(--brand-purple);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px;
+            backface-visibility: visible;
+            box-shadow: 0 0 30px rgba(157, 0, 255, 0.1);
+        }
+
+        /* The Bold Colorful Branding */
+        .company-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900; /* Extra Bold */
+            font-size: 2.5rem;
+            text-align: center;
+            letter-spacing: -1px;
+            background: linear-gradient(45deg, var(--brand-pink), var(--brand-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .service-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        /* Face Positioning */
+        .front  { transform: translateZ(150px); }
+        .back   { transform: rotateY(180deg) translateZ(150px); }
+        .right  { transform: rotateY(90deg) translateZ(150px); }
+        .left   { transform: rotateY(-90deg) translateZ(150px); }
+        .top    { transform: rotateX(90deg) translateZ(150px); }
+        .bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+        /* Overlay Styles */
+        .overlay-desc {
+            position: fixed; inset: 0;
+            background: rgba(249, 248, 246, 0.98);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: 0.6s ease;
+            z-index: 500;
+            padding: 10%;
+        }
+
+        .scene:active + .overlay-desc {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .desc-box { max-width: 600px; text-align: center; }
+        .desc-box h2 {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(45deg, var(--brand-pink), var(--brand-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem; margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .desc-box p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem; color: #444; line-height: 1.8;
+        }
+
+        .contact-footer {
+            margin-top: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem; letter-spacing: 3px;
+            color: var(--brand-purple);
+        }
+
+        .hint {
+            position: fixed; bottom: 50px; width: 100%;
+            text-align: center; font-size: 0.6rem; letter-spacing: 4px;
+            color: var(--brand-pink);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-logo" style="color: var(--brand-purple)">BE RIGHT</div>
+        <div style="font-family: Montserrat; font-size: 0.7rem; font-weight: bold;">+48 510 820 441</div>
+    </header>
+
+    <div class="scene">
+        <div class="cube-container" id="cube">
+            <div class="cube-face front">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">Business Strategy</div>
+            </div>
+            <div class="cube-face back">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">YouTube Curation</div>
+            </div>
+            <div class="cube-face right">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">Software Design</div>
+            </div>
+            <div class="cube-face left">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">Brand Architecture</div>
+            </div>
+            <div class="cube-face top">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">Market Intel</div>
+            </div>
+            <div class="cube-face bottom">
+                <div class="company-name">VINCI PLAY</div>
+                <div class="service-subtitle">Security</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay-desc">
+        <div class="desc-box">
+            <h2 id="focus-title">VINCI PLAY</h2>
+            <p id="focus-desc">Experience the pinnacle of automated luxury. We architect high-performance ecosystems that allow your brand to scale without the friction of traditional growth. By applying the "Be Right" methodology, your business becomes a lean, adaptive force in the 2026 digital landscape.</p>
+            <div class="contact-footer">
+                beright454@gmail.com // +48 510 820 441
+            </div>
+        </div>
+    </div>
+
+    <div class="hint">TOUCH & HOLD VINCI PLAY CUBE TO UNLOCK</div>
+
+</body>
+</html>

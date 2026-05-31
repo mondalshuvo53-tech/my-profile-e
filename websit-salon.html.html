@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neela'z Makeup Studio & Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+    /* --- COLOR PALETTE --- */
+    :root {
+        --bg-pink: #fff0f5;         /* Lavender Blush */
+        --bg-gradient: linear-gradient(135deg, #ffe6ea 0%, #ffd1dc 100%);
+        --primary-gold: #D4AF37;    /* Metallic Gold */
+        --text-gold: #B8860B;       /* Dark Goldenrod */
+        --card-cream: #FFFDF5;      /* Creamy White */
+        --accent-pink: #E91E63;     /* Deep Pink */
+        --text-dark: #333333;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lato', sans-serif;
+        background: var(--bg-gradient);
+        color: var(--text-dark);
+        overflow-x: hidden;
+    }
+
+    /* --- ANIMATED BANNER --- */
+    .marquee-container {
+        background: var(--accent-pink);
+        color: white;
+        padding: 8px 0;
+        overflow: hidden;
+        white-space: nowrap;
+        border-bottom: 2px solid var(--primary-gold);
+    }
+
+    .marquee-text {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll-left 15s linear infinite;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* --- HEADER SECTION --- */
+    .header {
+        text-align: center;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 5px solid var(--primary-gold);
+        position: relative;
+    }
+
+    .studio-name {
+        font-family: 'Cinzel', serif;
+        font-size: 2.8rem;
+        color: var(--text-gold);
+        text-transform: uppercase;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        font-weight: 700;
+    }
+
+    .tagline {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        color: var(--accent-pink);
+        margin-top: 5px;
+    }
+
+    .location-box {
+        margin-top: 15px;
+        font-size: 0.95rem;
+        color: #555;
+        background: rgba(255, 240, 245, 0.8);
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 50px;
+        border: 1px solid var(--primary-gold);
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-bar {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        padding: 15px 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 100;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        background: transparent;
+        border: 1px solid var(--primary-gold);
+        color: var(--text-gold);
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+        background: var(--primary-gold);
+        color: white;
+    }
+
+    .lang-btn {
+        background: var(--accent-pink);
+        color: white;
+        border-color: var(--accent-pink);
+    }
+    .lang-btn:hover { background: #c2185b; }
+
+    /* --- SERVICE GRID --- */
+    .container {
+        max-width: 1400px;
+        margin: 40px auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        padding-bottom: 100px;
+    }
+
+    .card {
+        background: var(--card-cream);
+        border: 1px solid #eee;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.4s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary-gold);
+        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+    }
+
+    .card-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--primary-gold);
+    }
+
+    .card-body {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .brand-tag {
+        color: var(--accent-pink);
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .card-title {
+        font-family: 'Cinzel', serif;
+        font-size: 1.3rem;
+        color: var(--text-gold);
+        margin: 5px 0 10px 0;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .card-desc {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        flex-grow: 1;
+        text-align: justify;
+    }
+
+    .price-box {
+        font-size: 1.1rem;
+        color: var(--accent-pink);
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .book-btn {
+        background: var(--primary-gold);
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 50px;
+        font-weight: bold;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .book-btn:hover {
+        background: #b89628;
+    }
+
+    /* --- FLOATING BUTTONS --- */
+    .fab-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 999;
+    }
+
+    .fab {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        font-size: 24px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: transform 0.3s;
+        border: 2px solid white;
+    }
+
+    .fab:hover { transform: scale(1.1); }
+    .fab.fb { background: #1877F2; }
+    .fab.call { background: var(--accent-pink); }
+    .fab.loc { background: var(--primary-gold); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .studio-name { font-size: 1.8rem; }
+        .tagline { font-size: 1.5rem; }
+        .nav-bar { justify-content: flex-start; overflow-x: auto; padding-left: 20px; }
+        .card-img { height: 180px; }
+    }
+
+</style>
+</head>
+<body>
+
+<div class="marquee-container">
+    <div class="marquee-text">
+        ✨ WELCOME TO NEELA'Z MAKEUP STUDIO & ACADEMY ✨ ADMISSIONS OPEN FOR PROFESSIONAL BRIDAL COURSES ✨ BOOK YOUR BRIDAL MAKEUP TODAY & GET SPECIAL DISCOUNTS ✨ LOCATION: PURONO HELENCHA, BAGDAH ✨
+    </div>
+</div>
+
+<div class="header">
+    <h1 class="studio-name">Neela'z Makeup Studio<br>& Academy</h1>
+    <div class="tagline">Where Beauty Meets Art</div>
+    
+    <div class="location-box">
+        📍 Purono Helencha, Bagdah, North 24 Parganas, West Bengal
+    </div>
+</div>
+
+<nav class="nav-bar">
+    <button class="nav-btn active" onclick="filterServices('all')">All Services</button>
+    <button class="nav-btn" onclick="filterServices('makeup')">Makeup</button>
+    <button class="nav-btn" onclick="filterServices('academy')">Academy</button>
+    <button class="nav-btn" onclick="filterServices('hair')">Hair</button>
+    <button class="nav-btn" onclick="filterServices('skin')">Skin</button>
+    <button class="nav-btn lang-btn" onclick="toggleLanguage()">🌐 English / বাংলা</button>
+</nav>
+
+<div class="container" id="grid">
+    </div>
+
+<div class="fab-container">
+    <a href="https://www.facebook.com/pinki.biswas.639298" class="fab fb" title="Facebook Page" target="_blank">f</a>
+    <a href="tel:+919876543210" class="fab call" title="Call Us">📞</a>
+    <a href="https://maps.google.com/?q=Purono+Helencha,+Bagdah,+West+Bengal" class="fab loc" title="Location" target="_blank">📍</a>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    let currentLang = 'en';
+    let currentCat = 'all';
+
+    // --- DATA: 30 SERVICES ---
+    const services = [
+        // --- MAKEUP (6) ---
+        { cat: 'makeup', brand: "MAC / Huda Beauty", price: "₹8,000+", img: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=600", en: {n: "HD Bridal Makeup", d: "Flawless High-Definition makeup for your big day. Sweat-resistant and camera-ready."}, bn: {n: "এইচডি ব্রাইডাল মেকআপ", d: "বিয়ের জন্য নিখুঁত এইচডি সাজ। ঘাম-প্রতিরোধী এবং ক্যামেরায় দুর্দান্ত দেখায়।"} },
+        { cat: 'makeup', brand: "Kryolan", price: "₹3,500+", img: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=600", en: {n: "Party Makeup", d: "Glamorous look for guests and parties. Includes eye makeup and long-lasting base."}, bn: {n: "পার্টি মেকআপ", d: "অনুষ্ঠানের জন্য গ্ল্যামারাস লুক। এতে আই মেকআপ এবং লং-লাস্টিং বেস থাকে।"} },
+        { cat: 'makeup', brand: "Airbrush", price: "₹12,000+", img: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=600", en: {n: "Airbrush Bridal", d: "Ultra-fine mist application for a natural, porcelain finish that lasts 16 hours."}, bn: {n: "এয়ারব্রাশ ব্রাইডাল", d: "ন্যাচারাল ফিনিশের জন্য এয়ারব্রাশ মেকআপ যা ১৬ ঘণ্টা পর্যন্ত স্থায়ী হয়।"} },
+        { cat: 'makeup', brand: "Huda / Nars", price: "₹5,000+", img: "https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=600", en: {n: "Reception Look", d: "Bold and elegant makeup specifically designed for reception evenings."}, bn: {n: "রিসেপশন লুক", d: "বউভাতের সন্ধ্যার জন্য বোল্ড এবং এলিগেন্ট মেকআপ।"} },
+        { cat: 'makeup', brand: "Styling", price: "₹500", img: "https://images.unsplash.com/photo-1583391726247-19b107e6008f?q=80&w=600", en: {n: "Saree Draping", d: "Professional draping in Bengali, Modern, or Lehenga style with safety pinning."}, bn: {n: "শাড়ি ড্রাপিং", d: "বাঙালি বা মডার্ন স্টাইলে শাড়ি পরানো। সেফটি পিন দিয়ে সেট করা হয়।"} },
+        { cat: 'makeup', brand: "Lashes", price: "₹1,500", img: "https://images.unsplash.com/photo-1583001931096-959e9ad7b535?q=80&w=600", en: {n: "Eyelash Extensions", d: "Temporary lash extensions to add volume and drama to your eyes."}, bn: {n: "আইল্যাশ এক্সটেনশন", d: "চোখকে সুন্দর ও বড় দেখাতে টেম্পোরারি ল্যাশ এক্সটেনশন।"} },
+
+        // --- ACADEMY (4) ---
+        { cat: 'academy', brand: "Certification", price: "Call for Fees", img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600", en: {n: "Pro Bridal Course", d: "Complete Basic to Advanced Bridal Makeup course with certification and practice."}, bn: {n: "প্রো ব্রাইডাল কোর্স", d: "বেসিক থেকে অ্যাডভান্সড ব্রাইডাল মেকআপ কোর্স। সার্টিফিকেট সহ।"} },
+        { cat: 'academy', brand: "Workshop", price: "₹2,000", img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?q=80&w=600", en: {n: "Self-Grooming", d: "Learn how to do your own makeup for daily wear and small parties."}, bn: {n: "সেলফ গ্রুমিং ক্লাস", d: "নিজের মেকআপ নিজে করতে শিখুন। প্রতিদিনের বা ছোট পার্টির জন্য।"} },
+        { cat: 'academy', brand: "Hair Styling", price: "Call for Fees", img: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=600", en: {n: "Hairstyle Course", d: "Learn traditional buns, braids, and modern open hairstyles."}, bn: {n: "হেয়ারস্টাইল কোর্স", d: "খোঁপা, বেণী এবং আধুনিক হেয়ারস্টাইল শিখুন।"} },
+        { cat: 'academy', brand: "Nail Art", price: "Call for Fees", img: "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600", en: {n: "Nail Art Class", d: "Learn gel extensions, acrylics, and nail art designs."}, bn: {n: "নেল আর্ট ক্লাস", d: "জেল এক্সটেনশন এবং নেল আর্ট ডিজাইন শিখুন।"} },
+
+        // --- HAIR (8) ---
+        { cat: 'hair', brand: "L’Oréal", price: "₹800+", img: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=600", en: {n: "Hair Spa", d: "Deep conditioning for dry hair using L'Oreal Spa cream."}, bn: {n: "হেয়ার স্পা", d: "শুষ্ক চুলের জন্য লরিয়াল স্পা ক্রিম দিয়ে ডিপ কন্ডিশনিং।"} },
+        { cat: 'hair', brand: "Schwarzkopf", price: "₹3,500+", img: "https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=600", en: {n: "Keratin Treatment", d: "Protein treatment for frizz-free, smooth, and shiny hair."}, bn: {n: "কেরাটিন ট্রিটমেন্ট", d: "ফ্রিজি চুলকে মসৃণ ও উজ্জ্বল করতে প্রোটিন ট্রিটমেন্ট।"} },
+        { cat: 'hair', brand: "L’Oréal X-Tenso", price: "₹4,000+", img: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=600", en: {n: "Smoothening", d: "Permanent straightening that keeps hair soft and manageable."}, bn: {n: "স্মুদেনিং", d: "চুল সোজা করার পার্মানেন্ট পদ্ধতি যা চুলকে নরম রাখে।"} },
+        { cat: 'hair', brand: "Matrix", price: "₹2,500+", img: "https://images.unsplash.com/photo-1620331311520-246422fd82f9?q=80&w=600", en: {n: "Global Color", d: "Full hair coloring with ammonia-free products."}, bn: {n: "গ্লোবাল কালার", d: "অ্যামোনিয়া-মুক্ত কালার দিয়ে পুরো চুল রঙ করা।"} },
+        { cat: 'hair', brand: "Wella", price: "₹3,000+", img: "https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?q=80&w=600", en: {n: "Highlights / Streaks", d: "Fashion shades for a trendy look (Red, Blonde, Ash)."}, bn: {n: "হাইলাইটস", d: "ট্রেন্ডি লুকের জন্য চুলে ফ্যাশন কালার বা স্ট্রিকস।"} },
+        { cat: 'hair', brand: "Olaplex", price: "₹2,000+", img: "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=600", en: {n: "Bond Repair", d: "Treatment for chemically damaged hair to prevent breakage."}, bn: {n: "বন্ড রিপেয়ার", d: "কেমিক্যাল ব্যবহারের ফলে ড্যামেজ চুলের ট্রিটমেন্ট।"} },
+        { cat: 'hair', brand: "Botox", price: "₹5,000+", img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=600", en: {n: "Hair Botox", d: "Anti-aging treatment to fill thin hair and add volume."}, bn: {n: "হেয়ার বোটক্স", d: "পাতলা চুলে ভলিউম এবং শাইন আনার জন্য।"} },
+        { cat: 'hair', brand: "Matrix", price: "₹600", img: "https://images.unsplash.com/photo-1527799822341-4f8d3d621c56?q=80&w=600", en: {n: "Dandruff Treatment", d: "Scalp cleansing to remove dandruff and itchiness."}, bn: {n: "খুশকি ট্রিটমেন্ট", d: "স্ক্যাল্প পরিষ্কার করে খুশকি এবং চুলকানি দূর করে।"} },
+
+        // --- SKIN (8) ---
+        { cat: 'skin', brand: "O3+", price: "₹2,500", img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600", en: {n: "O3+ Bridal Facial", d: "Whitening and brightening facial for the wedding glow."}, bn: {n: "O3+ ব্রাইডাল ফেসিয়াল", d: "বিয়ের কনের গ্লো এবং উজ্জ্বলতার জন্য সেরা।"} },
+        { cat: 'skin', brand: "Lotus", price: "₹1,500", img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600", en: {n: "Gold Facial", d: "24K Gold facial for instant radiance and party glow."}, bn: {n: "গোল্ড ফেসিয়াল", d: "তাৎক্ষণিক উজ্জ্বলতা এবং পার্টি গ্লোর জন্য।"} },
+        { cat: 'skin', brand: "Cheryl's", price: "₹1,200", img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=600", en: {n: "Tan Removal", d: "Removes sun tan and dullness instantly."}, bn: {n: "ট্যান রিমুভাল", d: "রোদে পোড়া দাগ এবং কালো ভাব দূর করে।"} },
+        { cat: 'skin', brand: "VLCC", price: "₹900", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600", en: {n: "Fruit Cleanup", d: "Basic cleanup for fresh and clean skin."}, bn: {n: "ফ্রুট ক্লিনআপ", d: "ফ্রেশ এবং পরিষ্কার ত্বকের জন্য বেসিক ক্লিনআপ।"} },
+        { cat: 'skin', brand: "Casmara", price: "₹3,000", img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?q=80&w=600", en: {n: "Algae Mask", d: "Cooling mask for tightening and anti-aging."}, bn: {n: "অ্যালগি মাস্ক", d: "ত্বক টানটান করার জন্য কুলিং মাস্ক।"} },
+        { cat: 'skin', brand: "Hydra", price: "₹4,000", img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=600", en: {n: "HydraFacial", d: "Deep pore cleaning with suction and serum infusion."}, bn: {n: "হাইড্রা-ফেসিয়াল", d: "মেশিনের সাহায্যে গভীর থেকে ত্বক পরিষ্কার করা।"} },
+        { cat: 'skin', brand: "Aroma", price: "₹1,000", img: "https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=600", en: {n: "Charcoal Detox", d: "Pollution control facial for oily skin."}, bn: {n: "চারকোল ডিটক্স", d: "তৈলাক্ত ত্বকের জন্য পলিউশন কন্ট্রোল ফেসিয়াল।"} },
+        { cat: 'skin', brand: "Fem", price: "₹300", img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=600", en: {n: "Face Bleach", d: "Herbal bleach to match facial hair with skin tone."}, bn: {n: "ফেস ব্লিচ", d: "হারবাল ব্লিচ যা মুখের লোম সোনালী করে।"} },
+
+        // --- BODY (4) ---
+        { cat: 'skin', brand: "Rica", price: "₹1,500", img: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=600", en: {n: "Full Body Waxing", d: "Painless Rica wax for smooth and tan-free skin."}, bn: {n: "ফুল বডি ওয়াক্সিং", d: "ব্যথামুক্ত রিকা ওয়াক্স। ত্বক মসৃণ করে।"} },
+        { cat: 'skin', brand: "OPI", price: "₹800", img: "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=600", en: {n: "Pedicure", d: "Relaxing foot massage, scrub, and nail care."}, bn: {n: "পেডিকিউর", d: "পায়ের ম্যাসাজ, স্ক্রাব এবং নখের যত্ন।"} },
+        { cat: 'skin', brand: "OPI", price: "₹600", img: "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=600", en: {n: "Manicure", d: "Hand care service with massage and polishing."}, bn: {n: "ম্যানিকিউর", d: "হাতের যত্ন, ম্যাসাজ এবং পলিশিং।"} },
+        { cat: 'skin', brand: "Lotus", price: "₹2,000", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=600", en: {n: "Body Polishing", d: "Full body scrub and pack for bridal glow."}, bn: {n: "বডি পলিশিং", d: "ব্রাইডাল গ্লোর জন্য ফুল বডি স্ক্রাব এবং প্যাক।"} }
+    ];
+
+    // --- LOGIC ---
+    function renderServices() {
+        const container = document.getElementById('grid');
+        let filtered = (currentCat === 'all') ? services : services.filter(s => s.cat === currentCat);
+        
+        let html = '';
+        filtered.forEach(s => {
+            const txt = s[currentLang];
+            const btnText = (currentLang === 'en') ? 'BOOK NOW' : 'বুক করুন';
+            
+            html += `
+            <div class="card">
+                <img src="${s.img}" alt="${txt.n}" class="card-img">
+                <div class="card-body">
+                    <div class="brand-tag">${s.brand}</div>
+                    <div class="card-title">${txt.n}</div>
+                    <div class="price-box">${s.price}</div>
+                    <p class="card-desc">${txt.d}</p>
+                    <a href="https://www.facebook.com/pinki.biswas.639298" target="_blank" class="book-btn">${btnText}</a>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    function filterServices(category) {
+        currentCat = category;
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        renderServices();
+    }
+
+    function toggleLanguage() {
+        currentLang = (currentLang === 'en') ? 'bn' : 'en';
+        renderServices();
+    }
+
+    // --- GOOGLE APPS SCRIPT HANDLERS ---
+    function doGet(e) { return "200 OK"; }
+    function sendMessage(msg) { console.log(msg); }
+    function getMessage() { return "Data Loaded"; }
+    function initialSetup() { renderServices(); }
+
+    window.onload = initialSetup;
+
+</script>
+</body>
+</html>

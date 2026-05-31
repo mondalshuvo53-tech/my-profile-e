@@ -1,0 +1,46 @@
+Act as an elite UI/UX graphic designer and frontend developer. I need a fully self-contained, single-file HTML/CSS/JS web application. Do not use any external frameworks or libraries (no React, no Tailwind, no Three.js); use only pure, native code.
+
+1. THEME & AESTHETIC:
+
+Design Style: [INSERT THEME HERE - e.g., Cyberpunk Neon, Apple Minimalist, Iron Man HUD, Bio-Organic].
+
+Background: [Describe background - e.g., deep animated space gradient, realistic stadium with dark overlay].
+
+Materials: Use high-end "Glassmorphism" (backdrop-filter: blur), deep layered box-shadows, and glowing neon borders where appropriate.
+
+2. 3D LAYOUT ENGINE (The "8D" Effect):
+
+Create a .scene with a perspective of 1500px to hold a .stack-container.
+
+Inside the container, cards must stack behind each other along the Z-axis.
+
+The Math: Use a JavaScript function to apply translate3d(x, y, z) and scale(). The active card should be front and center (scale 1). Cards behind it should push diagonally [e.g., right and down], push deep into the Z-axis (negative Z), and scale down sequentially (e.g., 100%, 84%, 68%).
+
+3. CONTENT & IMAGES:
+
+Cards must display an array of JSON data representing [e.g., 30 Cricket Players, Real Estate Properties, Products].
+
+Include a massive image container (e.g., 250x250px). Crucially, the image must use object-fit: contain; so the full image is visible without being cropped.
+
+Include a clean, grid-based statistics layout below the image.
+
+4. FLUID PHYSICS & INTERACTIVITY:
+
+Use a slow-motion CSS transition on the cards for transform, opacity, and box-shadow (e.g., transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)).
+
+Write JavaScript event listeners to cycle through the cards using: Mouse Wheel (deltaY), Keyboard Arrows (Up/Down/Left/Right), and Mobile Touch Swiping.
+
+Include a dynamic progress bar at the bottom of the screen that fills up as the user cycles through the cards.
+
+Write production-ready, beautiful code. Provide the complete master code in a single block.
+
+🧠 Why this prompt works like magic:
+To get a masterpiece, you can't just ask an AI to "make it look cool." This master prompt forces the AI to execute on four critical pillars:
+
+"Single-file / Pure Native Code": This ensures the AI doesn't give you code that requires complex server setups, paid APIs, or software installations. It guarantees a file you can just double-click and open.
+
+"The Math": By explicitly mentioning translate3d(x, y, z), scale(), and perspective: 1500px, you force the AI to build a true 3D spatial engine instead of a boring flat slider.
+
+"object-fit: contain": This specific CSS command is the secret to making sure your custom image links never get chopped off or distorted.
+
+"cubic-bezier(0.2, 0.8, 0.2, 1)": This tells the AI exactly how the animation should feel. Instead of a robotic, sudden snap, this math formula creates that highly premium, slow-motion liquid glide you liked in the previous designs.
